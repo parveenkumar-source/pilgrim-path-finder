@@ -70,15 +70,15 @@ const Footer = () => {
             <ul className="space-y-3 font-body text-sm">
               <li className="flex items-start gap-2 text-primary-foreground/60">
                 <MapPin className="w-4 h-4 mt-0.5 text-gold shrink-0" />
-                123 Pilgrim Road, New Delhi, India
+                143201 Beas, Punjab, India
               </li>
               <li className="flex items-center gap-2 text-primary-foreground/60">
                 <Phone className="w-4 h-4 text-gold shrink-0" />
-                +91 98765 43210
+                +91 98145 17648
               </li>
               <li className="flex items-center gap-2 text-primary-foreground/60">
                 <Mail className="w-4 h-4 text-gold shrink-0" />
-                info@pilgrimway.in
+                sahiladwani@gmail.com
               </li>
             </ul>
             <div className="flex gap-3 mt-5">
