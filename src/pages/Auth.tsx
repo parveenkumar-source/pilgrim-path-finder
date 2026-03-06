@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
@@ -6,7 +6,8 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
 import { useAuth } from "@/contexts/AuthContext";
-import { useEffect } from "react";
+import { InputOTP, InputOTPGroup, InputOTPSlot } from "@/components/ui/input-otp";
+import { ArrowLeft, Mail } from "lucide-react";
 
 const Auth = () => {
   const [isLogin, setIsLogin] = useState(true);
@@ -14,6 +15,8 @@ const Auth = () => {
   const [password, setPassword] = useState("");
   const [fullName, setFullName] = useState("");
   const [loading, setLoading] = useState(false);
+  const [showOtp, setShowOtp] = useState(false);
+  const [otpCode, setOtpCode] = useState("");
   const { toast } = useToast();
   const navigate = useNavigate();
   const { user, role } = useAuth();
@@ -45,7 +48,11 @@ const Auth = () => {
           },
         });
         if (error) throw error;
-        toast({ title: "Account created!", description: "Please check your email to verify your account." });
+        setShowOtp(true);
+        toast({
+          title: "Verification code sent! 📧",
+          description: "Please check your email for the 6-digit code.",
+        });
       }
     } catch (error: any) {
       toast({ title: "Error", description: error.message, variant: "destructive" });
@@ -53,6 +60,106 @@ const Auth = () => {
       setLoading(false);
     }
   };
+
+  const handleVerifyOtp = async () => {
+    if (otpCode.length !== 6) return;
+    setLoading(true);
+
+    try {
+      const { error } = await supabase.auth.verifyOtp({
+        email,
+        token: otpCode,
+        type: "signup",
+      });
+      if (error) throw error;
+      toast({ title: "Email verified! 🙏", description: "Your account is now active." });
+    } catch (error: any) {
+      toast({ title: "Verification failed", description: error.message, variant: "destructive" });
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleResendOtp = async () => {
+    setLoading(true);
+    try {
+      const { error } = await supabase.auth.resend({
+        type: "signup",
+        email,
+      });
+      if (error) throw error;
+      toast({ title: "Code resent! 📧", description: "Check your email for the new code." });
+    } catch (error: any) {
+      toast({ title: "Error", description: error.message, variant: "destructive" });
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  if (showOtp) {
+    return (
+      <div className="min-h-screen bg-background flex items-center justify-center px-4">
+        <div className="w-full max-w-md">
+          <div className="text-center mb-8">
+            <a href="/" className="font-display text-3xl font-bold text-foreground">🙏 PilgrimWay</a>
+            <p className="font-body text-muted-foreground mt-2">Verify your email</p>
+          </div>
+
+          <div className="bg-card border border-border rounded-2xl p-8 shadow-lg">
+            <div className="text-center mb-6">
+              <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                <Mail className="w-8 h-8 text-primary" />
+              </div>
+              <h2 className="font-display text-xl font-semibold mb-2">Enter verification code</h2>
+              <p className="font-body text-sm text-muted-foreground">
+                We sent a 6-digit code to <span className="font-medium text-foreground">{email}</span>
+              </p>
+            </div>
+
+            <div className="flex justify-center mb-6">
+              <InputOTP maxLength={6} value={otpCode} onChange={setOtpCode}>
+                <InputOTPGroup>
+                  <InputOTPSlot index={0} />
+                  <InputOTPSlot index={1} />
+                  <InputOTPSlot index={2} />
+                  <InputOTPSlot index={3} />
+                  <InputOTPSlot index={4} />
+                  <InputOTPSlot index={5} />
+                </InputOTPGroup>
+              </InputOTP>
+            </div>
+
+            <Button
+              onClick={handleVerifyOtp}
+              className="w-full rounded-full font-body"
+              disabled={loading || otpCode.length !== 6}
+            >
+              {loading ? "Verifying..." : "Verify Email"}
+            </Button>
+
+            <div className="text-center mt-4">
+              <button
+                onClick={handleResendOtp}
+                className="font-body text-sm text-muted-foreground hover:text-primary"
+                disabled={loading}
+              >
+                Didn't receive the code? <span className="font-medium text-primary">Resend</span>
+              </button>
+            </div>
+
+            <div className="text-center mt-4">
+              <button
+                onClick={() => { setShowOtp(false); setOtpCode(""); }}
+                className="font-body text-sm text-muted-foreground hover:text-foreground flex items-center gap-1 mx-auto"
+              >
+                <ArrowLeft className="w-3 h-3" /> Back to sign up
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-background flex items-center justify-center px-4">
