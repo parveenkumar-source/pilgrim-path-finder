@@ -1,1 +1,4 @@
 project_id = "xlkkgkhyfbhptwyklahj"
+
+[functions.pilgrim-chat]
+verify_jwt = false
