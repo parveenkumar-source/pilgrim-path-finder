@@ -39,7 +39,7 @@ const Auth = () => {
         if (error) throw error;
         toast({ title: "Welcome back! 🙏" });
       } else {
-        const { error } = await supabase.auth.signUp({
+        const { data, error } = await supabase.auth.signUp({
           email,
           password,
           options: {
@@ -48,6 +48,18 @@ const Auth = () => {
           },
         });
         if (error) throw error;
+        
+        // Check if user already exists (Supabase returns empty identities for existing users)
+        if (data.user && (!data.user.identities || data.user.identities.length === 0)) {
+          toast({
+            title: "Account already exists",
+            description: "This email is already registered. Please sign in instead.",
+            variant: "destructive",
+          });
+          setIsLogin(true);
+          return;
+        }
+        
         setShowOtp(true);
         toast({
           title: "Verification code sent! 📧",
