@@ -38,7 +38,7 @@ const destinations = [
 
 const DestinationsSection = () => {
   return (
-    <section className="py-24 bg-gradient-warm">
+    <section id="destinations" className="py-24 bg-gradient-warm">
       <div className="container mx-auto px-4">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
