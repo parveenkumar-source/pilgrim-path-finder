@@ -54,6 +54,7 @@ const App = () => (
               <Route path="pilgrims" element={<AdminPilgrims />} />
               <Route path="cleaners" element={<AdminCleaners />} />
               <Route path="schedules" element={<AdminSchedules />} />
+              <Route path="contact" element={<AdminContactSubmissions />} />
             </Route>
 
             {/* Cleaner routes */}

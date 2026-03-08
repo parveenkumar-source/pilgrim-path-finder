@@ -17,6 +17,7 @@ const navItems = [
   { label: "Pilgrims", icon: Users, path: "/admin/pilgrims" },
   { label: "Cleaners", icon: Brush, path: "/admin/cleaners" },
   { label: "Schedules", icon: Calendar, path: "/admin/schedules" },
+  { label: "Contact", icon: Mail, path: "/admin/contact" },
 ];
 
 const AdminLayout = () => {
