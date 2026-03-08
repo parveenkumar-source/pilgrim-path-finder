@@ -1,11 +1,13 @@
 import { Outlet, useNavigate, useLocation } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
 import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
 import {
   LayoutDashboard, MapPin, Hotel, Utensils, Package, BookOpen,
   Users, Brush, Calendar, LogOut, Menu, X, ChevronRight, Mail
 } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { supabase } from "@/integrations/supabase/client";
 
 const navItems = [
   { label: "Dashboard", icon: LayoutDashboard, path: "/admin" },
@@ -25,6 +27,20 @@ const AdminLayout = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [unreadCount, setUnreadCount] = useState(0);
+
+  useEffect(() => {
+    const fetchUnread = async () => {
+      const { count } = await supabase
+        .from("contact_submissions")
+        .select("*", { count: "exact", head: true })
+        .eq("is_read", false);
+      setUnreadCount(count || 0);
+    };
+    fetchUnread();
+    const interval = setInterval(fetchUnread, 30000);
+    return () => clearInterval(interval);
+  }, []);
 
   return (
     <div className="min-h-screen bg-background flex">
@@ -37,14 +53,19 @@ const AdminLayout = () => {
           <h2 className="font-display text-xl font-bold text-foreground">🙏 Admin Panel</h2>
         </div>
         <nav className="p-4 space-y-1">
-          {navItems.map((item) => (
+           {navItems.map((item) => (
             <button
               key={item.path}
               onClick={() => { navigate(item.path); setSidebarOpen(false); }}
               className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg font-body text-sm transition-colors ${location.pathname === item.path ? "bg-primary text-primary-foreground" : "text-muted-foreground hover:bg-secondary"}`}
             >
               <item.icon className="w-4 h-4" />
-              {item.label}
+              <span className="flex-1 text-left">{item.label}</span>
+              {item.path === "/admin/contact" && unreadCount > 0 && (
+                <Badge variant="destructive" className="text-xs px-1.5 py-0 min-w-[20px] justify-center">
+                  {unreadCount}
+                </Badge>
+              )}
             </button>
           ))}
         </nav>
