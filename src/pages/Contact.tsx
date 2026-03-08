@@ -93,6 +93,18 @@ const Contact = () => {
         </div>
       </section>
 
+      {/* Map */}
+      <section className="bg-card border-b border-border">
+        <iframe
+          title="Office Location"
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d27133.292541498!2d75.37!3d31.87!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x391a1f2bcbce5b1b%3A0x8cb15e98bcd1e32!2sBeas%2C%20Punjab%20143201!5e0!3m2!1sen!2sin!4v1700000000000"
+          className="w-full h-64 md:h-80 border-0"
+          allowFullScreen
+          loading="lazy"
+          referrerPolicy="no-referrer-when-downgrade"
+        />
+      </section>
+
       {/* Contact content */}
       <section className="py-16">
         <div className="container mx-auto px-4">
