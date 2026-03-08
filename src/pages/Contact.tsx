@@ -65,6 +65,18 @@ const Contact = () => {
       toast({ title: "Error", description: "Failed to send message. Please try again.", variant: "destructive" });
       return;
     }
+
+    // Send email notification (fire-and-forget)
+    supabase.functions.invoke("notify-contact", {
+      body: {
+        name: result.data.name,
+        email: result.data.email,
+        phone: result.data.phone || "",
+        subject: result.data.subject,
+        message: result.data.message,
+      },
+    }).catch(console.error);
+
     toast({ title: "Message Sent! 🙏", description: "We'll get back to you within 24 hours." });
     setForm({ name: "", email: "", phone: "", subject: "", message: "" });
     setErrors({});
