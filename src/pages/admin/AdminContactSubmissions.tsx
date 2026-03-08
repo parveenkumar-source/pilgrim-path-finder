@@ -95,6 +95,11 @@ const AdminContactSubmissions = () => {
                   </td>
                   <td className="p-3">
                     <div className="flex gap-1" onClick={(e) => e.stopPropagation()}>
+                      <Button size="icon" variant="ghost" asChild>
+                        <a href={`mailto:${s.email}?subject=Re: ${encodeURIComponent(s.subject)}`} title="Reply">
+                          <Reply className="w-4 h-4" />
+                        </a>
+                      </Button>
                       <Button size="icon" variant="ghost" onClick={() => toggleRead(s.id, s.is_read)}>
                         {s.is_read ? <Mail className="w-4 h-4" /> : <MailOpen className="w-4 h-4" />}
                       </Button>
