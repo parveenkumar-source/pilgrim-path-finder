@@ -2,6 +2,7 @@ import { useState } from "react";
 import { z } from "zod";
 import { motion } from "framer-motion";
 import { MapPin, Phone, Mail, Send, Clock } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -52,9 +53,18 @@ const Contact = () => {
     }
 
     setSubmitting(true);
-    // Simulate submission delay
-    await new Promise((r) => setTimeout(r, 1200));
+    const { error } = await supabase.from("contact_submissions").insert({
+      name: result.data.name,
+      email: result.data.email,
+      phone: result.data.phone || "",
+      subject: result.data.subject,
+      message: result.data.message,
+    });
     setSubmitting(false);
+    if (error) {
+      toast({ title: "Error", description: "Failed to send message. Please try again.", variant: "destructive" });
+      return;
+    }
     toast({ title: "Message Sent! 🙏", description: "We'll get back to you within 24 hours." });
     setForm({ name: "", email: "", phone: "", subject: "", message: "" });
     setErrors({});

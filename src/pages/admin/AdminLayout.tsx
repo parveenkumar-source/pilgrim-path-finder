@@ -3,7 +3,7 @@ import { useAuth } from "@/contexts/AuthContext";
 import { Button } from "@/components/ui/button";
 import {
   LayoutDashboard, MapPin, Hotel, Utensils, Package, BookOpen,
-  Users, Brush, Calendar, LogOut, Menu, X, ChevronRight
+  Users, Brush, Calendar, LogOut, Menu, X, ChevronRight, Mail
 } from "lucide-react";
 import { useState } from "react";
 
@@ -17,6 +17,7 @@ const navItems = [
   { label: "Pilgrims", icon: Users, path: "/admin/pilgrims" },
   { label: "Cleaners", icon: Brush, path: "/admin/cleaners" },
   { label: "Schedules", icon: Calendar, path: "/admin/schedules" },
+  { label: "Contact", icon: Mail, path: "/admin/contact" },
 ];
 
 const AdminLayout = () => {
