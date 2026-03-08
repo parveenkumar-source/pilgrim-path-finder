@@ -3,7 +3,7 @@ import { useAuth } from "@/contexts/AuthContext";
 import { Button } from "@/components/ui/button";
 import {
   LayoutDashboard, MapPin, Hotel, Utensils, Package, BookOpen,
-  Users, Brush, Calendar, LogOut, Menu, X, ChevronRight
+  Users, Brush, Calendar, LogOut, Menu, X, ChevronRight, Mail
 } from "lucide-react";
 import { useState } from "react";
 
