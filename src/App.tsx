@@ -9,6 +9,7 @@ import PilgrimChatbot from "@/components/PilgrimChatbot";
 import Index from "./pages/Index";
 import Auth from "./pages/Auth";
 import Packages from "./pages/Packages";
+import Contact from "./pages/Contact";
 import PackageDetails from "./pages/PackageDetails";
 import MyBookings from "./pages/MyBookings";
 import AdminLayout from "./pages/admin/AdminLayout";
@@ -37,6 +38,7 @@ const App = () => (
             <Route path="/" element={<Index />} />
             <Route path="/auth" element={<Auth />} />
             <Route path="/packages" element={<Packages />} />
+            <Route path="/contact" element={<Contact />} />
             <Route path="/packages/:id" element={<PackageDetails />} />
             <Route path="/my-bookings" element={<ProtectedRoute><MyBookings /></ProtectedRoute>} />
 
