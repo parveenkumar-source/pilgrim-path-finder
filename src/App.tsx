@@ -22,6 +22,7 @@ import AdminBookings from "./pages/admin/AdminBookings";
 import AdminPilgrims from "./pages/admin/AdminPilgrims";
 import AdminCleaners from "./pages/admin/AdminCleaners";
 import AdminSchedules from "./pages/admin/AdminSchedules";
+import AdminContactSubmissions from "./pages/admin/AdminContactSubmissions";
 import CleanerPortal from "./pages/CleanerPortal";
 import NotFound from "./pages/NotFound";
 
