@@ -2,6 +2,7 @@ import { useState } from "react";
 import { z } from "zod";
 import { motion } from "framer-motion";
 import { MapPin, Phone, Mail, Send, Clock } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
