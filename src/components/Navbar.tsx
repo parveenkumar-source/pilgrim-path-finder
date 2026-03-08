@@ -78,16 +78,16 @@ const Navbar = () => {
         >
           <div className="container mx-auto px-4 py-4 flex flex-col gap-3">
             {navLinks.map((link) => (
-              <a key={link.label} href={link.href} onClick={() => setMobileOpen(false)} className="font-body text-cream/70 hover:text-gold py-2">
+              <button key={link.label} onClick={() => { navigate(link.href); setMobileOpen(false); }} className="font-body text-cream/70 hover:text-gold py-2 text-left">
                 {link.label}
-              </a>
+              </button>
             ))}
             {user ? (
               <>
-                {role === "admin" && <a href="/admin" className="font-body text-gold py-2">Admin Panel</a>}
-                {role === "cleaner" && <a href="/cleaner" className="font-body text-gold py-2">My Tasks</a>}
-                <a href="/my-bookings" className="font-body text-cream/70 hover:text-gold py-2">My Bookings</a>
-                <button onClick={signOut} className="font-body text-cream/70 hover:text-gold py-2 text-left">Sign Out</button>
+                {role === "admin" && <button onClick={() => { navigate("/admin"); setMobileOpen(false); }} className="font-body text-gold py-2 text-left">Admin Panel</button>}
+                {role === "cleaner" && <button onClick={() => { navigate("/cleaner"); setMobileOpen(false); }} className="font-body text-gold py-2 text-left">My Tasks</button>}
+                <button onClick={() => { navigate("/my-bookings"); setMobileOpen(false); }} className="font-body text-cream/70 hover:text-gold py-2 text-left">My Bookings</button>
+                <button onClick={() => { signOut(); setMobileOpen(false); }} className="font-body text-cream/70 hover:text-gold py-2 text-left">Sign Out</button>
               </>
             ) : (
               <Button size="sm" className="rounded-full font-body w-fit" onClick={() => { navigate("/auth"); setMobileOpen(false); }}>
