@@ -2,3 +2,6 @@ project_id = "xlkkgkhyfbhptwyklahj"
 
 [functions.pilgrim-chat]
 verify_jwt = false
+
+[functions.notify-contact]
+verify_jwt = false
